@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TwitterizerViewController.h
 //  Twitterizer
 //
 //  Created by Suleiman Younossi on 3/16/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface TwitterizerViewController : UIViewController
 
 @end
-
