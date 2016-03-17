@@ -16,6 +16,9 @@
 
 @implementation TwitterizerViewController
 
+
+//Load views and access text view delegate
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -31,21 +34,13 @@
     
 }
 
+//Take out vowels action button
+
 - (IBAction)twitterize:(UIButton *)sender {
     NSString *ogString = self.textView.text;
     NSString *finalString = [NSMutableString new];
     
-// NSUInteger length = ogString.length;
-    
-    
-//    for (int i = 0; i < length; i++) {
-//        [ogString characterAtIndex:i];
-//        if (![[NSString stringWithFormat:@"%c", [ogString characterAtIndex:i]]  isEqualToString:@"a"]) {
-//            [finalString appendString:[NSString stringWithFormat:@"%c", [ogString characterAtIndex:i]]];
-//            
-//        }
-//
-//    }
+
     
     NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"aeiou"];
     finalString = [[ogString componentsSeparatedByCharactersInSet:doNotWant] componentsJoinedByString:@""];
@@ -57,8 +52,42 @@
     
     
 }
+- (IBAction)hashTagButton:(UIButton *)sender {
+    NSString *hashTagTextField = self.textView.text;
+    NSMutableArray *arr = [[hashTagTextField componentsSeparatedByString:@" "]  mutableCopy];
+    NSMutableString *tempMutString = [NSMutableString new];
+    NSMutableString *tempMutString2 = [NSMutableString new];
+    
+    if ([hashTagTextField containsString:@"#"]) {
+        NSLog(@"containsString");
+    }
+    NSLog(@"does not have #");
+    
+    for (int i = 0; i < arr.count; i++) {
+        if (i % 2) {
+            NSLog(@"even index");
+            
+            NSString *tempString = [NSString stringWithFormat:@"#%@", arr[i]];
+            tempMutString = [NSMutableString stringWithFormat:@"%@", tempString];
+            tempMutString2 = [NSMutableString stringWithFormat:@"%@ %@", tempMutString2, tempMutString];
+        } else {
+            NSLog(@"odd index");
+            
+            tempMutString = [NSMutableString stringWithFormat:@"%@", arr[i]];
+            tempMutString2 = [NSMutableString stringWithFormat:@"%@ %@", tempMutString2, tempMutString];
+        }
+    }
+    NSLog(@"finished and printing out final");
+    
+    self.textView.text = tempMutString2;
+}
 
-- (void) textViewDidChange:(UITextView *)textView {
+
+
+    
+
+
+- (void)textViewDidChange:(UITextView *)textView {
     NSUInteger length = textView.text.length;
     self.textCount.text = [NSString stringWithFormat:@"%lu",length];
     
@@ -110,5 +139,58 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+-(NSString *)reverseString: (NSString *)oldString {
+    
+    NSUInteger length = oldString.length;
+    NSMutableString *newString = [NSMutableString new];
+    
+    
+
+    for(int i = length - 1;i >= 0; i--) {
+        
+        [newString appendFormat:@"%c",[oldString characterAtIndex:i]];
+        
+    }
+    
+    NSLog(@"reverseString() old string >%@<", oldString);
+    NSLog(@"reverseString() new string >%@<", newString);
+    return newString;
+
+}
+
+
+
+- (IBAction)reverseButton:(UIButton *)sender {
+    
+    NSArray *words = [self.textView.text componentsSeparatedByString:@" "];
+    NSMutableString *newParagraph = [NSMutableString new];
+    
+    
+    for (int i = 0; i < words.count; i++) {
+        NSString *word = words[i];
+        
+        
+        if (![word containsString:@"#"]) {
+            
+            word = [self reverseString:word];
+            
+        }
+        
+        [newParagraph appendString:word];
+        [newParagraph appendString:@" "];
+    }
+    
+    self.textView.text = newParagraph;
+    
+    
+    
+    
+    
+    
+    
+    
+}
 
 @end

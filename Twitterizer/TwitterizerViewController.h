@@ -10,4 +10,6 @@
 
 @interface TwitterizerViewController : UIViewController
 
+- (void)removeOddElements;
+
 @end
